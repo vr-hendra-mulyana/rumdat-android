@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+<head>
+   <title>Rumdat Games</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+</head>
+<body onload="load()" style="background: #00ff01;height:100%;">
+<div id="header" style="height:7%;width: 50%;margin:0 auto;background:url(assets/bquiz.png);background-size: 100% 100%;background-repeat: no-repeat;">
+</div>
+<div id="main" style="height:75%;">
+  <div style="height:15%;"></div>
+  <div id="quiz" style="width: 95%;margin: 0 auto;"></div>
+</div>
+<div id="footer" style="text-align:center;height:10%">
+ <div style="float:left;height:100%;"><a href="home.html"><img src="assets/bback.png" style="height:100%;width:100%" /></a></div>
+ <div style="height:100%;">
+  <div style="width:30%;margin:0 auto;text-align:center;font-weight:bold;">SKOR</div>
+  <div id="skor" style="width:30%;margin:0 auto;background:#8b0101;text-align:center;padding:8px 0;color:white;font-size:20px;">0</div>
+ </div>
+ <div style="clear:both;"></div>
+</div>
+<div style="clear:both"></div>
+<script>
+  var qz = [];
+  qz[0] = ["Rumah adat Krong Bade berasal dari ?","Sumatra Barat","Riau","Jambi","Aceh", 4];
+  qz[1] = ["Rumah adat Bolon berasal dari ?","Sumatra Utara","Riau","Jambi","Aceh", 1];
+  qz[2] = ["Rumah adat Melayu Selaso Jatuh Kembar berasal dari ?","Sumatra Utara","Riau","Jambi","Aceh", 2];
+  var idx = 0;
+  var skor = 0;
+
+  function render(){
+    var r = "<div style='padding:20px;font-size:20px;border-radius:40px;background:#8b0101;color:white;font-weight:bold;text-align:center;'>" + qz[idx][0] + "</div><div style='height:20px;'></div>";
+    r += "<div onclick='answer(1)' style='width:45%;margin-bottom:10px;float:left;padding:15px 0;font-size:16px;border-radius:20px;background:#8b0101;color:white;font-weight:bold;text-align:center;'>A. " + qz[idx][1] + "</div><div style='float:right;padding:15px 0;font-size:16px;border-radius:20px;background:#8b0101;color:white;font-weight:bold;text-align:center;width:45%;' onclick='answer(2)'>B. " + qz[idx][2] + "</div>";
+    r += "<div style='clear:both;'></div>";
+    r += "<div onclick='answer(3)' style='width:45%;float:left;padding:15px 0;font-size:16px;border-radius:20px;background:#8b0101;color:white;font-weight:bold;text-align:center;'>C. " + qz[idx][3] + "</div><div style='float:right;padding:15px 0;font-size:16px;border-radius:20px;background:#8b0101;color:white;font-weight:bold;text-align:center;width:45%;' onclick='answer(4)'>D. " + qz[idx][4] + "</div>";
+    r += "<div style='clear:both;'></div>";
+    document.getElementById("quiz").innerHTML = r;
+  }
+
+  function renderEnd(){
+    var r = "<div style='padding:20px;font-size:20px;border-radius:40px;background:#8b0101;color:white;font-weight:bold;text-align:center;'>Quiz Selesai Skor Kamu : " + skor + "</div><div style='height:20px;'></div>";
+    document.getElementById("quiz").innerHTML = r;
+  }
+
+  function answer(x){
+    if(qz[idx][5] == x){
+      skor++;
+    }else{
+      skor--;
+    }
+    renderskor();
+  }
+
+  function renderskor(){
+    document.getElementById("skor").innerHTML = skor;
+    idx++;
+    if(idx < qz.length){
+      render();
+    }else{
+      renderEnd();
+    }
+  }
+
+  function load(){
+    render();
+  }
+</script>
+</body>
+</html>

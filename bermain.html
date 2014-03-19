@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+<head>
+   <title>Rumdat Games</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+   <script src="assets/jquery-1.11.0.min.js"></script>
+   <script src="assets/jquery.pep.js"></script>
+</head>
+<body onload="load()" style="background: #00ff01;height:100%;">
+<div id="header" style="height:7%;width: 50%;margin:0 auto;background:url(assets/bbermain.png);background-size: 100% 100%;background-repeat: no-repeat;">
+</div>
+<div id="main" style="width:100%;">
+  <div style="height:5%;"></div>
+  <div id="quiz" style="height:94%">
+    <div id="x1" style="float:left;width:30%;"><img src="" style="width:100%;" /></div>
+    <div id="y1" class="answ" value="test" style="margin:5px 0;float:right;width:30%;color:#8b0101;border:solid 3px #8b0101"><p style="font-size:20px;font-weight:bold;text-align:center;"></p></div>
+    <div style="clear:both;"></div>
+    <div id="x2" style="float:left;width:30%;"><img src="" style="width:100%;" /></div>
+    <div id="y2" class="answ" value="test" style="margin:5px 0;float:right;width:30%;color:#8b0101;border:solid 3px #8b0101"><p style="font-size:20px;font-weight:bold;text-align:center;"></p></div>
+    <div style="clear:both;"></div>
+    <div id="x3" style="float:left;width:30%;"><img src="" style="width:100%;" /></div>
+    <div id="y3" class="answ" value="test" style="margin:5px 0;float:right;width:30%;color:#8b0101;border:solid 3px #8b0101"><p style="font-size:20px;font-weight:bold;text-align:center;"></p></div>
+    <div style="clear:both;"></div>
+    <div id="x4" style="float:left;width:30%;"><img src="" style="width:100%;" /></div>
+    <div id="y4" class="answ" value="test" style="margin:5px 0;float:right;width:30%;color:#8b0101;border:solid 3px #8b0101"><p style="font-size:20px;font-weight:bold;text-align:center;"></p></div>
+    <div style="clear:both;"></div>
+  </div>
+</div>
+<div id="footer" style="text-align:center;height:10%">
+ <div style="float:left;height:100%;"><a href="home.html"><img src="assets/bback.png" style="height:100%;width:100%" /></a></div>
+ <div style="height:100%;">
+  <div style="width:30%;margin:0 auto;text-align:center;font-weight:bold;">SKOR</div>
+  <div id="skor" style="width:30%;margin:0 auto;background:#8b0101;text-align:center;padding:8px 0;color:white;font-size:20px;">0</div>
+ </div>
+ <div style="clear:both;"></div>
+</div>
+<div style="clear:both"></div>
+<script>
+
+  var qz = [];
+  var tz = [];
+
+  tz[0] = ["Riau", 0];
+  tz[1] = ["Aceh", 1];
+  tz[2] = ["Jambi", 3];
+  tz[3] = ["Jabar", 2];
+
+  qz[0] = ["aceh.jpeg",1];
+  qz[1] = ["riau.jpg",0];
+  qz[2] = ["jabar.jpg",2];
+  qz[3] = ["jambi.jpg",3];
+
+  function render(){
+    for(var i = 1; i < 5; i++){
+      $("#x" + i).attr("value",qz[i-1][1]);
+      $("#y" + i).attr("value",tz[i-1][1]);
+      $("#x" + i + " img").attr("src","belajar/assets/" + qz[i-1][0]);
+      $("#y" + i + " p").html(tz[i-1][0]);
+    }
+  }
+
+  function renderEnd(){
+    var r = "<div style='padding:20px;font-size:20px;border-radius:40px;background:#8b0101;color:white;font-weight:bold;text-align:center;'>Permainan Selesai Skor Kamu : " + skor + "</div><div style='height:20px;'></div>";
+    document.getElementById("quiz").innerHTML = r;
+  }
+
+  function load(){
+    render();
+    $("#main").attr("style","width:100%;height:" + $("#main").outerHeight() + "px");
+    
+ for(var i=1; i < 5; i++){
+  jQuery(function($) {
+    $('#x' + i).pep({constrainTo: 'parent',droppable: '.answ',
+  overlapFunction: false,start: function(ev, obj){
+    obj.noCenter = false;
+  },
+  drag: function(ev, obj){
+    var vel = obj.velocity();
+    var rot = (vel.x)/5;
+    rotate(obj.$el, rot)         
+  },
+  stop: function(ev, obj){
+    rotate(obj.$el, 0)         
+  },
+  rest: handleCentering}); 
+  });
+ }
+}
+  
+  function handleCentering(ev, obj){
+  if ( obj.activeDropRegions.length > 0 ) { 
+    var $parent = obj.activeDropRegions[0];
+    answer($parent.attr("value"), obj.$el.attr("value"));
+    $parent.hide();
+    obj.$el.hide();
+  }
+}
+
+function rotate($obj, deg){}
+
+  var skor = 0;
+  var idx=0;
+
+  function answer(x, y){
+    if(x == y){
+      skor++;
+    }else{
+      skor--;
+    }
+    renderskor();
+  }
+
+  function renderskor(){
+    document.getElementById("skor").innerHTML = skor;
+    idx++;
+    if(idx < qz.length){
+    }else{
+      renderEnd();
+    }
+  }
+
+</script>
+</body>
+</html>
